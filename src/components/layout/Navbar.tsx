@@ -2,15 +2,23 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ShoppingBag, Menu, X, User, Search } from 'lucide-react';
+import { ShoppingBag, Menu, X, User, Search, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/hooks/useCart';
 import { Badge } from '@/components/ui/badge';
+import { useAuth } from '@/contexts/AuthContext';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { itemCount } = useCart();
+  const { user, signOut } = useAuth();
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -58,9 +66,32 @@ export const Navbar = () => {
             <Button variant="ghost" size="icon">
               <Search className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
-            </Button>
+            
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem disabled className="font-medium">
+                    {user.email}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => signOut()}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link to="/auth">
+                <Button variant="ghost" size="icon">
+                  <User className="h-5 w-5" />
+                </Button>
+              </Link>
+            )}
+            
             <Link to="/cart">
               <Button variant="ghost" size="icon" className="relative">
                 <ShoppingBag className="h-5 w-5" />
@@ -111,13 +142,20 @@ export const Navbar = () => {
                 </Link>
               ))}
               <div className="flex space-x-4 pt-2">
+                <Button variant="ghost" size="sm" className="flex-1" onClick={() => {
+                  setIsMenuOpen(false);
+                  if (user) {
+                    signOut();
+                  } else {
+                    window.location.href = '/auth';
+                  }
+                }}>
+                  <User className="h-4 w-4 mr-2" />
+                  {user ? 'Sign Out' : 'Account'}
+                </Button>
                 <Button variant="ghost" size="sm" className="flex-1">
                   <Search className="h-4 w-4 mr-2" />
                   Search
-                </Button>
-                <Button variant="ghost" size="sm" className="flex-1">
-                  <User className="h-4 w-4 mr-2" />
-                  Account
                 </Button>
               </div>
             </div>
