@@ -58,6 +58,32 @@ const formFieldVariants = {
   }
 };
 
+// Background animation variants
+const backgroundVariants = {
+  animate: {
+    backgroundPosition: ['0% 0%', '100% 100%'],
+    transition: {
+      duration: 20,
+      ease: "linear",
+      repeat: Infinity,
+      repeatType: "reverse"
+    }
+  }
+};
+
+const floatingBubblesVariants = {
+  animate: custom => ({
+    y: [0, -15, 0],
+    opacity: [0.7, 1, 0.7],
+    scale: [1, 1.1, 1],
+    transition: {
+      duration: 3 + custom,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  })
+};
+
 const Auth = () => {
   const { user, signIn, signUp, loading } = useAuth();
   const [activeTab, setActiveTab] = useState('login');
@@ -94,17 +120,66 @@ const Auth = () => {
     return <Navigate to="/" />;
   }
 
+  // Bubble positions for decorative elements
+  const bubbles = [
+    { x: '10%', y: '10%', delay: 0, size: 80 },
+    { x: '85%', y: '15%', delay: 1.5, size: 120 },
+    { x: '70%', y: '80%', delay: 0.5, size: 100 },
+    { x: '20%', y: '70%', delay: 2, size: 90 },
+    { x: '50%', y: '35%', delay: 1, size: 70 },
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100">
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
       <Navbar />
-      <main className="flex-grow flex items-center justify-center py-12">
+      
+      {/* Animated background */}
+      <motion.div 
+        className="absolute inset-0 -z-10 bg-gradient-to-br from-gray-900 via-primary/20 to-gray-800 opacity-90"
+        variants={backgroundVariants}
+        animate="animate"
+      />
+      
+      {/* Decorative elements */}
+      <div className="absolute inset-0 -z-5 overflow-hidden">
+        {bubbles.map((bubble, index) => (
+          <motion.div 
+            key={index}
+            className="absolute rounded-full bg-white/5 backdrop-blur-md"
+            style={{
+              left: bubble.x,
+              top: bubble.y,
+              width: bubble.size,
+              height: bubble.size,
+            }}
+            variants={floatingBubblesVariants}
+            custom={bubble.delay}
+            animate="animate"
+          />
+        ))}
+      </div>
+      
+      {/* Animated pattern overlay */}
+      <motion.div 
+        className="absolute inset-0 -z-5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"
+        animate={{ 
+          backgroundPosition: ['0% 0%', '100% 100%']
+        }}
+        transition={{ 
+          duration: 60, 
+          repeat: Infinity, 
+          repeatType: "reverse" 
+        }}
+      />
+      
+      <main className="flex-grow flex items-center justify-center py-12 px-4">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={containerVariants}
           className="w-full max-w-md"
         >
-          <Card className="p-8 shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+          <Card className="p-8 shadow-xl border-0 bg-white/20 backdrop-blur-md rounded-2xl">
             <motion.div 
               variants={itemVariants}
               className="text-center mb-6"
@@ -118,26 +193,26 @@ const Auth = () => {
                   damping: 20,
                   delay: 0.2 
                 }}
-                className="inline-flex p-3 rounded-full bg-red-100 mb-4"
+                className="inline-flex p-3 rounded-full bg-primary/20 backdrop-blur-md mb-4"
               >
-                <User className="h-6 w-6 text-primary" />
+                <User className="h-6 w-6 text-white" />
               </motion.div>
               <motion.h1 
                 variants={itemVariants}
-                className="text-2xl font-bold"
+                className="text-2xl font-bold text-white"
               >
                 Welcome to Lumitage
               </motion.h1>
               <motion.p 
                 variants={itemVariants}
-                className="text-gray-600 mt-2"
+                className="text-gray-200 mt-2"
               >
                 Sign in or create an account
               </motion.p>
             </motion.div>
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-8">
+              <TabsList className="grid w-full grid-cols-2 mb-8 bg-black/20 backdrop-blur-md">
                 <TabsTrigger
                   value="login"
                   className="data-[state=active]:bg-primary data-[state=active]:text-white transition-all duration-300"
@@ -163,18 +238,18 @@ const Auth = () => {
                         name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel className="text-white">Email</FormLabel>
                             <FormControl>
                               <div className="relative">
                                 <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                                 <Input 
                                   placeholder="Email" 
                                   {...field} 
-                                  className="pl-10 bg-white/90 backdrop-blur-sm focus:ring-2 focus:ring-primary/50 transition-all"
+                                  className="pl-10 bg-white/10 backdrop-blur-sm border-white/20 focus:ring-2 focus:ring-primary/50 transition-all text-white"
                                 />
                               </div>
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className="text-red-300" />
                           </FormItem>
                         )}
                       />
@@ -186,7 +261,7 @@ const Auth = () => {
                         name="password"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Password</FormLabel>
+                            <FormLabel className="text-white">Password</FormLabel>
                             <FormControl>
                               <div className="relative">
                                 <KeyRound className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -194,11 +269,11 @@ const Auth = () => {
                                   type="password" 
                                   placeholder="Password" 
                                   {...field} 
-                                  className="pl-10 bg-white/90 backdrop-blur-sm focus:ring-2 focus:ring-primary/50 transition-all" 
+                                  className="pl-10 bg-white/10 backdrop-blur-sm border-white/20 focus:ring-2 focus:ring-primary/50 transition-all text-white" 
                                 />
                               </div>
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className="text-red-300" />
                           </FormItem>
                         )}
                       />
@@ -230,15 +305,15 @@ const Auth = () => {
                         name="firstName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>First Name</FormLabel>
+                            <FormLabel className="text-white">First Name</FormLabel>
                             <FormControl>
                               <Input 
                                 placeholder="First Name" 
                                 {...field} 
-                                className="bg-white/90 backdrop-blur-sm focus:ring-2 focus:ring-primary/50 transition-all" 
+                                className="bg-white/10 backdrop-blur-sm border-white/20 focus:ring-2 focus:ring-primary/50 transition-all text-white" 
                               />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className="text-red-300" />
                           </FormItem>
                         )}
                       />
@@ -248,15 +323,15 @@ const Auth = () => {
                         name="lastName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Last Name</FormLabel>
+                            <FormLabel className="text-white">Last Name</FormLabel>
                             <FormControl>
                               <Input 
                                 placeholder="Last Name" 
                                 {...field} 
-                                className="bg-white/90 backdrop-blur-sm focus:ring-2 focus:ring-primary/50 transition-all" 
+                                className="bg-white/10 backdrop-blur-sm border-white/20 focus:ring-2 focus:ring-primary/50 transition-all text-white" 
                               />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className="text-red-300" />
                           </FormItem>
                         )}
                       />
@@ -268,18 +343,18 @@ const Auth = () => {
                         name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel className="text-white">Email</FormLabel>
                             <FormControl>
                               <div className="relative">
                                 <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                                 <Input 
                                   placeholder="Email" 
                                   {...field} 
-                                  className="pl-10 bg-white/90 backdrop-blur-sm focus:ring-2 focus:ring-primary/50 transition-all" 
+                                  className="pl-10 bg-white/10 backdrop-blur-sm border-white/20 focus:ring-2 focus:ring-primary/50 transition-all text-white" 
                                 />
                               </div>
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className="text-red-300" />
                           </FormItem>
                         )}
                       />
@@ -291,7 +366,7 @@ const Auth = () => {
                         name="password"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Password</FormLabel>
+                            <FormLabel className="text-white">Password</FormLabel>
                             <FormControl>
                               <div className="relative">
                                 <KeyRound className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -299,11 +374,11 @@ const Auth = () => {
                                   type="password" 
                                   placeholder="Password" 
                                   {...field} 
-                                  className="pl-10 bg-white/90 backdrop-blur-sm focus:ring-2 focus:ring-primary/50 transition-all" 
+                                  className="pl-10 bg-white/10 backdrop-blur-sm border-white/20 focus:ring-2 focus:ring-primary/50 transition-all text-white" 
                                 />
                               </div>
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className="text-red-300" />
                           </FormItem>
                         )}
                       />
@@ -331,7 +406,7 @@ const Auth = () => {
               variants={itemVariants}
               className="text-center mt-6"
             >
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-200">
                 {activeTab === 'login' ? "Don't have an account? " : "Already have an account? "}
                 <motion.button 
                   onClick={() => setActiveTab(activeTab === 'login' ? 'register' : 'login')}
@@ -351,7 +426,7 @@ const Auth = () => {
           >
             <motion.a 
               href="/admin-auth" 
-              className="text-sm text-gray-500 hover:text-primary inline-flex items-center gap-1"
+              className="text-sm text-gray-300 hover:text-primary inline-flex items-center gap-1"
               whileHover={{ scale: 1.05, color: "#FF0000" }}
               whileTap={{ scale: 0.95 }}
             >
