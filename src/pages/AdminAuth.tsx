@@ -42,6 +42,7 @@ const AdminAuth = () => {
       if (values.email.includes('admin')) {
         setIsAdmin(true);
         toast.success('Welcome to the Admin Dashboard!');
+        // Direct navigation instead of relying on the redirect in the render function
         navigate('/admin/dashboard');
       } else {
         toast.error('Access denied. Admin privileges required.');
@@ -51,11 +52,9 @@ const AdminAuth = () => {
     }
   };
 
-  // Redirect if user is already logged in
+  // Redirect if user is already logged in and is admin
   if (user && isAdmin) {
     return <Navigate to="/admin/dashboard" />;
-  } else if (user && !isAdmin) {
-    return <Navigate to="/" />;
   }
 
   return (

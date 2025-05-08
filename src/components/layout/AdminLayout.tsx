@@ -5,13 +5,21 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { LayoutDashboard, Package, Settings, ShoppingCart, Users, LogOut } from "lucide-react";
 import { Outlet, NavLink, Navigate, useLocation } from 'react-router-dom';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export const AdminLayout = () => {
   const { user, signOut } = useAuth();
   const location = useLocation();
   const { toggleSidebar } = useSidebar();
+  const [isAdminUser, setIsAdminUser] = useState(false);
+  
+  // Check if the user is admin based on email
+  useEffect(() => {
+    if (user && user.email && user.email.includes('admin')) {
+      setIsAdminUser(true);
+    }
+  }, [user]);
   
   // Redirect if not logged in
   if (!user) {
@@ -34,7 +42,7 @@ export const AdminLayout = () => {
     if (location.pathname === '/admin/dashboard') {
       toast.success(`Welcome to admin dashboard, ${user.email?.split('@')[0] || 'Admin'}`);
     }
-  }, []);
+  }, [location.pathname, user.email]);
 
   return (
     <div className="min-h-screen bg-gray-50">
