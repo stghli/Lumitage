@@ -18,6 +18,15 @@ import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import AdminAuth from "./pages/AdminAuth";
 
+// Admin components
+import { AdminProvider } from "./components/admin/AdminProvider";
+import { AdminLayout } from "./components/layout/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import Orders from "./pages/admin/Orders";
+import Products from "./pages/admin/Products";
+import Customers from "./pages/admin/Customers";
+import Settings from "./pages/admin/Settings";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -39,6 +48,18 @@ const App = () => (
               <Route path="/contact" element={<Contact />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin-auth" element={<AdminAuth />} />
+              
+              {/* Admin Routes */}
+              <Route element={<AdminProvider />}>
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="orders" element={<Orders />} />
+                  <Route path="products" element={<Products />} />
+                  <Route path="customers" element={<Customers />} />
+                  <Route path="settings" element={<Settings />} />
+                </Route>
+              </Route>
+              
               <Route path="*" element={<NotFound />} />
             </Routes>
           </CartProvider>

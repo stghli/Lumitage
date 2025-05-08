@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,6 +13,7 @@ import { Footer } from '@/components/layout/Footer';
 import { Lock } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -22,6 +23,7 @@ const loginSchema = z.object({
 const AdminAuth = () => {
   const { user, signIn, loading } = useAuth();
   const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
 
   const loginForm = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -32,11 +34,20 @@ const AdminAuth = () => {
   });
 
   const onLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
-    await signIn(values.email, values.password);
-    // In a real app, you would verify admin status here
-    // This is a placeholder for demonstration
-    if (values.email.includes('admin')) {
-      setIsAdmin(true);
+    try {
+      await signIn(values.email, values.password);
+      
+      // In a real app, you would verify admin status against your DB
+      // This is a placeholder for demonstration
+      if (values.email.includes('admin')) {
+        setIsAdmin(true);
+        toast.success('Welcome to the Admin Dashboard!');
+        navigate('/admin/dashboard');
+      } else {
+        toast.error('Access denied. Admin privileges required.');
+      }
+    } catch (error) {
+      toast.error('Failed to sign in. Please check your credentials.');
     }
   };
 
@@ -103,6 +114,10 @@ const AdminAuth = () => {
                   <Button type="submit" className="w-full bg-primary hover:bg-red-700 transition-all" disabled={loading}>
                     {loading ? 'Signing in...' : 'Sign in to Admin'}
                   </Button>
+                  
+                  <p className="text-center text-sm text-gray-500 mt-2">
+                    Use any email with "admin" in it and any password (min 6 chars) for demo access
+                  </p>
                 </form>
               </Form>
             </CardContent>
