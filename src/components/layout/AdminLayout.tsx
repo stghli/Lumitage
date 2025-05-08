@@ -7,6 +7,7 @@ import { LayoutDashboard, Package, Settings, ShoppingCart, Users, LogOut } from 
 import { Outlet, NavLink, Navigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { Chat } from "../admin/Chat/Chat";
 
 export const AdminLayout = () => {
   const { user, signOut } = useAuth();
@@ -165,6 +166,9 @@ export const AdminLayout = () => {
           <Outlet />
         </main>
       </div>
+
+      {/* Add Chat Component */}
+      <Chat />
     </div>
   );
 };
