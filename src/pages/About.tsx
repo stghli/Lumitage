@@ -45,8 +45,8 @@ const About = () => {
               </div>
               <div className="relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1581329957085-f4afe7340024?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=80" 
-                  alt="Artisans at work" 
+                  src="/assets/images/artisans-beads.jpg" 
+                  alt="Artisans working on beads" 
                   className="rounded-2xl shadow-xl h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 border border-black/10 rounded-2xl pointer-events-none"></div>
@@ -61,8 +61,8 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
               <div className="order-2 md:order-1 relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1506459225024-1428097a7e18?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=80" 
-                  alt="Traditional craftwork" 
+                  src="/assets/images/traditional-bags.jpg" 
+                  alt="Traditional handcrafted bags" 
                   className="rounded-2xl shadow-xl h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 border border-black/10 rounded-2xl pointer-events-none"></div>
@@ -99,8 +99,8 @@ const About = () => {
               <Card className="border-none shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <div className="aspect-[4/5] overflow-hidden relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1530821875964-91927b611bad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                    alt="Artisan Kofi" 
+                    src="/assets/images/artisan-beads.jpg" 
+                    alt="Artisan Kofi working with beads" 
                     className="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
                   />
                 </div>
@@ -116,8 +116,8 @@ const About = () => {
               <Card className="border-none shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <div className="aspect-[4/5] overflow-hidden relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                    alt="Artisan Ama" 
+                    src="/assets/images/artisan-bags.jpg" 
+                    alt="Artisan Ama designing bags" 
                     className="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
                   />
                 </div>
@@ -133,8 +133,8 @@ const About = () => {
               <Card className="border-none shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <div className="aspect-[4/5] overflow-hidden relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1539701938214-0d9736e1c16b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                    alt="Artisan Kwame" 
+                    src="/assets/images/artisan-sandals.jpg" 
+                    alt="Artisan Kwame crafting sandals" 
                     className="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
                   />
                 </div>
