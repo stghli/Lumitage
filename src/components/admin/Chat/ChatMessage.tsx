@@ -23,7 +23,7 @@ export const ChatMessage = ({ message, isAi, timestamp }: ChatMessageProps) => {
           isAi ? "bg-muted" : "bg-primary text-primary-foreground"
         )}
       >
-        <p className="text-sm">{message}</p>
+        <p className="text-sm whitespace-pre-wrap">{message}</p>
         <p className="text-xs opacity-70 mt-1">
           {timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </p>
@@ -31,7 +31,7 @@ export const ChatMessage = ({ message, isAi, timestamp }: ChatMessageProps) => {
       {!isAi && (
         <Avatar className="h-8 w-8">
           <AvatarImage src="" />
-          <AvatarFallback className="bg-secondary text-secondary-foreground">AD</AvatarFallback>
+          <AvatarFallback className="bg-secondary text-secondary-foreground">You</AvatarFallback>
         </Avatar>
       )}
     </div>
