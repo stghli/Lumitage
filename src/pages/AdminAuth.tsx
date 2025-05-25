@@ -22,7 +22,6 @@ const loginSchema = z.object({
 
 const AdminAuth = () => {
   const { user, signIn, loading } = useAuth();
-  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   const loginForm = useForm<z.infer<typeof loginSchema>>({
@@ -37,12 +36,9 @@ const AdminAuth = () => {
     try {
       await signIn(values.email, values.password);
       
-      // In a real app, you would verify admin status against your DB
-      // This is a placeholder for demonstration
+      // Check if email contains 'admin' for admin access
       if (values.email.includes('admin')) {
-        setIsAdmin(true);
         toast.success('Welcome to the Admin Dashboard!');
-        // Direct navigation instead of relying on the redirect in the render function
         navigate('/admin/dashboard');
       } else {
         toast.error('Access denied. Admin privileges required.');
@@ -52,8 +48,8 @@ const AdminAuth = () => {
     }
   };
 
-  // Redirect if user is already logged in and is admin
-  if (user && isAdmin) {
+  // Redirect if user is already logged in and has admin email
+  if (user && user.email && user.email.includes('admin')) {
     return <Navigate to="/admin/dashboard" />;
   }
 
