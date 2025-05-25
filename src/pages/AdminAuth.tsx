@@ -33,25 +33,35 @@ const AdminAuth = () => {
   });
 
   const onLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
+    console.log('Admin login attempt with:', { email: values.email });
+    
     try {
+      console.log('Calling signIn...');
       await signIn(values.email, values.password);
+      console.log('signIn completed successfully');
       
       // Check if email contains 'admin' for admin access
       if (values.email.includes('admin')) {
+        console.log('Admin email detected, navigating to dashboard...');
         toast.success('Welcome to the Admin Dashboard!');
         navigate('/admin/dashboard');
       } else {
+        console.log('Non-admin email, denying access');
         toast.error('Access denied. Admin privileges required.');
       }
     } catch (error) {
+      console.error('Login error:', error);
       toast.error('Failed to sign in. Please check your credentials.');
     }
   };
 
   // Redirect if user is already logged in and has admin email
   if (user && user.email && user.email.includes('admin')) {
+    console.log('User already logged in with admin email, redirecting...');
     return <Navigate to="/admin/dashboard" />;
   }
+
+  console.log('Current user state:', { user, loading });
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100">
