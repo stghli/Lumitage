@@ -27,6 +27,14 @@ import Products from "./pages/admin/Products";
 import Customers from "./pages/admin/Customers";
 import Settings from "./pages/admin/Settings";
 
+// User components
+import { UserLayout } from "./components/layout/UserLayout";
+import UserDashboard from "./pages/user/Dashboard";
+import UserOrders from "./pages/user/Orders";
+import Wishlist from "./pages/user/Wishlist";
+import Tracking from "./pages/user/Tracking";
+import Profile from "./pages/user/Profile";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -58,6 +66,18 @@ const App = () => (
                   <Route path="products" element={<Products />} />
                   <Route path="customers" element={<Customers />} />
                   <Route path="settings" element={<Settings />} />
+                </Route>
+              </Route>
+
+              {/* User Routes */}
+              <Route path="/user" element={<AdminProvider />}>
+                <Route index element={<Navigate to="/user/dashboard" replace />} />
+                <Route path="" element={<UserLayout />}>
+                  <Route path="dashboard" element={<UserDashboard />} />
+                  <Route path="orders" element={<UserOrders />} />
+                  <Route path="wishlist" element={<Wishlist />} />
+                  <Route path="tracking" element={<Tracking />} />
+                  <Route path="profile" element={<Profile />} />
                 </Route>
               </Route>
               

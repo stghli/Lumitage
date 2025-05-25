@@ -1,6 +1,6 @@
 
 import { motion } from 'framer-motion';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, LayoutDashboard } from 'lucide-react';
 
 type AuthFooterProps = {
   activeTab: string;
@@ -38,16 +38,26 @@ export const AuthFooter = ({ activeTab, onTabChange }: AuthFooterProps) => {
 
       <motion.div 
         variants={itemVariants}
-        className="mt-8 text-center"
+        className="mt-8 text-center space-y-3"
       >
         <motion.a 
           href="/admin-auth" 
-          className="text-sm text-gray-300 hover:text-primary inline-flex items-center gap-1"
+          className="text-sm text-gray-300 hover:text-primary inline-flex items-center gap-1 block"
           whileHover={{ scale: 1.05, color: "#FF0000" }}
           whileTap={{ scale: 0.95 }}
         >
           <ShieldCheck className="h-4 w-4" />
           Admin Login
+        </motion.a>
+        
+        <motion.a 
+          href="/user/dashboard" 
+          className="text-sm text-gray-300 hover:text-primary inline-flex items-center gap-1 block"
+          whileHover={{ scale: 1.05, color: "#FF0000" }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <LayoutDashboard className="h-4 w-4" />
+          User Dashboard
         </motion.a>
       </motion.div>
     </>
