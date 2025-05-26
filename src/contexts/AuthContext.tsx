@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -8,7 +7,7 @@ import { toast } from 'sonner';
 type AuthContextType = {
   user: User | null;
   session: Session | null;
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string, skipRedirect?: boolean) => Promise<void>;
   signUp: (email: string, password: string, firstName?: string, lastName?: string) => Promise<void>;
   signOut: () => Promise<void>;
   loading: boolean;
@@ -26,6 +25,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log('Auth state change:', { event, session });
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
@@ -34,6 +34,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Initial session check:', session);
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
@@ -42,21 +43,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (email: string, password: string, skipRedirect: boolean = false) => {
     try {
       setLoading(true);
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      console.log('AuthContext signIn called with:', { email, skipRedirect });
+      
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       
       if (error) {
+        console.error('Supabase auth error:', error);
         toast.error(error.message);
         return;
       }
       
+      console.log('Supabase auth success:', data);
       toast.success('Successfully signed in!');
-      navigate('/');
+      
+      // Only redirect if not skipping redirect (for admin login)
+      if (!skipRedirect) {
+        navigate('/');
+      }
     } catch (error) {
+      console.error('Error in signIn:', error);
       toast.error('Error signing in');
-      console.error('Error signing in:', error);
     } finally {
       setLoading(false);
     }

@@ -36,8 +36,8 @@ const AdminAuth = () => {
     console.log('Admin login attempt with:', { email: values.email });
     
     try {
-      console.log('Calling signIn...');
-      await signIn(values.email, values.password);
+      console.log('Calling signIn with skipRedirect...');
+      await signIn(values.email, values.password, true); // Skip automatic redirect
       console.log('signIn completed successfully');
       
       // Check if email contains 'admin' for admin access
