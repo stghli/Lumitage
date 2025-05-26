@@ -44,16 +44,18 @@ const AdminAuth = () => {
     
     try {
       console.log('Calling signIn with skipRedirect...');
-      await signIn(values.email, values.password, true); // Skip automatic redirect
-      console.log('signIn completed successfully');
+      const result = await signIn(values.email, values.password, true); // Skip automatic redirect
+      console.log('signIn result:', result);
       
-      // Navigate to admin dashboard after successful login
+      // Only redirect if signIn was successful (no error thrown)
       console.log('Admin email detected, navigating to dashboard...');
       toast.success('Welcome to the Admin Dashboard!');
       navigate('/admin/dashboard');
     } catch (error) {
       console.error('Login error:', error);
       toast.error('Failed to sign in. Please check your credentials.');
+      // Don't navigate on error
+      return;
     }
   };
 

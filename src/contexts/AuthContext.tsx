@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (error) {
         console.error('Supabase auth error:', error);
         toast.error(error.message);
-        return;
+        throw error; // Re-throw the error so the calling code can handle it
       }
       
       console.log('Supabase auth success:', data);
@@ -66,6 +66,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error) {
       console.error('Error in signIn:', error);
       toast.error('Error signing in');
+      throw error; // Re-throw so AdminAuth can handle the error
     } finally {
       setLoading(false);
     }
