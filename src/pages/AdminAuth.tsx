@@ -35,20 +35,22 @@ const AdminAuth = () => {
   const onLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
     console.log('Admin login attempt with:', { email: values.email });
     
+    // Check if email contains 'admin' before attempting login
+    if (!values.email.includes('admin')) {
+      console.log('Non-admin email, denying access');
+      toast.error('Access denied. Admin privileges required.');
+      return;
+    }
+    
     try {
       console.log('Calling signIn with skipRedirect...');
       await signIn(values.email, values.password, true); // Skip automatic redirect
       console.log('signIn completed successfully');
       
-      // Check if email contains 'admin' for admin access
-      if (values.email.includes('admin')) {
-        console.log('Admin email detected, navigating to dashboard...');
-        toast.success('Welcome to the Admin Dashboard!');
-        navigate('/admin/dashboard');
-      } else {
-        console.log('Non-admin email, denying access');
-        toast.error('Access denied. Admin privileges required.');
-      }
+      // Navigate to admin dashboard after successful login
+      console.log('Admin email detected, navigating to dashboard...');
+      toast.success('Welcome to the Admin Dashboard!');
+      navigate('/admin/dashboard');
     } catch (error) {
       console.error('Login error:', error);
       toast.error('Failed to sign in. Please check your credentials.');
