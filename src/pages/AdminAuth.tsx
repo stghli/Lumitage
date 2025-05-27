@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
-import { Lock } from 'lucide-react';
+import { Lock, User, Key } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -27,8 +27,8 @@ const AdminAuth = () => {
   const loginForm = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'admin@artisanmarket.com',
+      password: 'admin123',
     },
   });
 
@@ -57,6 +57,12 @@ const AdminAuth = () => {
       // Don't navigate on error
       return;
     }
+  };
+
+  const fillDemoCredentials = () => {
+    loginForm.setValue('email', 'admin@artisanmarket.com');
+    loginForm.setValue('password', 'admin123');
+    toast.success('Demo credentials filled in!');
   };
 
   // Redirect if user is already logged in and has admin email
@@ -90,6 +96,27 @@ const AdminAuth = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6">
+              {/* Demo Credentials Card */}
+              <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <Key className="h-4 w-4 text-blue-600" />
+                  <h3 className="font-semibold text-blue-900">Demo Credentials</h3>
+                </div>
+                <div className="text-sm text-blue-700 space-y-1 mb-3">
+                  <p><strong>Email:</strong> admin@artisanmarket.com</p>
+                  <p><strong>Password:</strong> admin123</p>
+                </div>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={fillDemoCredentials}
+                  className="w-full border-blue-300 text-blue-700 hover:bg-blue-100"
+                >
+                  <User className="h-4 w-4 mr-2" />
+                  Use Demo Credentials
+                </Button>
+              </div>
+
               <Form {...loginForm}>
                 <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
                   <FormField
@@ -125,7 +152,7 @@ const AdminAuth = () => {
                   </Button>
                   
                   <p className="text-center text-sm text-gray-500 mt-2">
-                    Use any email with "admin" in it and any password (min 6 chars) for demo access
+                    Click "Use Demo Credentials" above for instant access
                   </p>
                 </form>
               </Form>
