@@ -22,7 +22,7 @@ export const AboutArtisans = () => {
           <Card className="border-none shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 group bg-gradient-to-br from-white to-gray-50/50">
             <div className="aspect-[4/5] overflow-hidden relative">
               <img 
-                src="/lovable-uploads/artisan-beads-work.jpg" 
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" 
                 alt="Artisan Kofi working with beads" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -40,7 +40,7 @@ export const AboutArtisans = () => {
           <Card className="border-none shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 group bg-gradient-to-br from-white to-gray-50/50">
             <div className="aspect-[4/5] overflow-hidden relative">
               <img 
-                src="/lovable-uploads/artisan-bags-design.jpg" 
+                src="https://images.unsplash.com/photo-1494790108755-2616b612b734?auto=format&fit=crop&w=400&q=80" 
                 alt="Artisan Ama designing bags" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -58,7 +58,7 @@ export const AboutArtisans = () => {
           <Card className="border-none shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 group bg-gradient-to-br from-white to-gray-50/50">
             <div className="aspect-[4/5] overflow-hidden relative">
               <img 
-                src="/lovable-uploads/artisan-sandals-craft.jpg" 
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80" 
                 alt="Artisan Kwame crafting sandals" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />

@@ -9,7 +9,7 @@ export const AboutHistory = () => {
           <div className="order-2 lg:order-1 relative group">
             <div className="absolute -inset-4 bg-gradient-to-r from-secondary/20 to-primary/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
             <img 
-              src="/lovable-uploads/traditional-bags-workshop.jpg" 
+              src="https://images.unsplash.com/photo-1556906781-9a412961c28c?auto=format&fit=crop&w=800&q=80" 
               alt="Traditional handcrafted bags in workshop" 
               className="relative rounded-2xl shadow-2xl h-full w-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500"
             />

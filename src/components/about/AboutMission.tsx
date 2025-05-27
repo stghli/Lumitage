@@ -30,7 +30,7 @@ export const AboutMission = () => {
           <div className="relative group">
             <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
             <img 
-              src="/lovable-uploads/sandals-making-process.jpg" 
+              src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80" 
               alt="Artisans working on traditional sandals" 
               className="relative rounded-2xl shadow-2xl h-full w-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500"
             />
