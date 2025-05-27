@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -85,7 +84,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         
         // Only redirect if not skipping redirect (for admin login)
         if (!skipRedirect) {
-          navigate('/');
+          // Check if user is admin or regular user
+          if (email.toLowerCase().includes('admin')) {
+            navigate('/admin/dashboard');
+          } else {
+            navigate('/user/dashboard');
+          }
         }
         return;
       } catch (supabaseError) {
@@ -104,7 +108,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           
           // Only redirect if not skipping redirect (for admin login)
           if (!skipRedirect) {
-            navigate('/');
+            // Check if user is admin or regular user
+            if (email.toLowerCase().includes('admin')) {
+              navigate('/admin/dashboard');
+            } else {
+              navigate('/user/dashboard');
+            }
           }
           return;
         } else {
