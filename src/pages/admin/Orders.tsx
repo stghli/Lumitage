@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -147,32 +146,32 @@ const Orders = () => {
       order.id === orderId ? { ...order, status: newStatus } : order
     ));
   };
-
+  
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-6 text-white">
-        <h1 className="text-3xl font-bold mb-2">Orders Management</h1>
-        <p className="text-blue-100">Track and manage all your store orders</p>
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-4 text-white">
+        <h1 className="text-2xl font-bold mb-1">Orders Management</h1>
+        <p className="text-blue-100 text-sm">Track and manage all your store orders</p>
       </div>
       
       {/* Filters and Search */}
-      <Card className="shadow-lg border-0">
-        <CardContent className="p-6">
-          <div className="flex flex-col md:flex-row gap-4">
+      <Card className="shadow-sm border">
+        <CardContent className="p-4">
+          <div className="flex flex-col md:flex-row gap-3">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input 
                 placeholder="Search orders by ID or customer..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 h-9"
               />
             </div>
             
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full md:w-48">
-                <SelectValue placeholder="Filter by status" />
+              <SelectTrigger className="w-full md:w-40 h-9">
+                <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Statuses</SelectItem>
@@ -185,8 +184,8 @@ const Orders = () => {
             </Select>
             
             <Select value={paymentFilter} onValueChange={setPaymentFilter}>
-              <SelectTrigger className="w-full md:w-48">
-                <SelectValue placeholder="Filter by payment" />
+              <SelectTrigger className="w-full md:w-40 h-9">
+                <SelectValue placeholder="Payment" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Payments</SelectItem>
@@ -196,19 +195,19 @@ const Orders = () => {
               </SelectContent>
             </Select>
             
-            <Button className="bg-gradient-to-r from-green-600 to-blue-600">
-              Export Orders
+            <Button size="sm" className="bg-gradient-to-r from-green-600 to-blue-600 h-9">
+              Export
             </Button>
           </div>
         </CardContent>
       </Card>
 
       {/* Orders Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {filteredOrders.length === 0 ? (
-          <div className="col-span-full text-center py-12">
-            <Package className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 text-lg">No orders found matching your criteria.</p>
+          <div className="col-span-full text-center py-8">
+            <Package className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+            <p className="text-gray-500">No orders found matching your criteria.</p>
           </div>
         ) : (
           filteredOrders.map((order, index) => (
@@ -216,49 +215,47 @@ const Orders = () => {
               key={order.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.05 }}
             >
-              <Card className="shadow-lg border-0 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer bg-gradient-to-br from-white to-gray-50">
-                <CardHeader className="pb-3">
+              <Card className="shadow-sm border hover:shadow-md transition-all duration-200 hover:scale-[1.02] cursor-pointer bg-white">
+                <CardHeader className="pb-2 p-3">
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg font-bold text-gray-900">{order.id}</CardTitle>
-                    <div className="flex gap-2">
-                      <Badge className={getStatusColor(order.status)}>
-                        {getStatusIcon(order.status)}
-                        <span className="ml-1 capitalize">{order.status}</span>
-                      </Badge>
-                    </div>
+                    <CardTitle className="text-sm font-bold text-gray-900 truncate">{order.id}</CardTitle>
+                    <Badge className={`${getStatusColor(order.status)} text-xs px-1.5 py-0.5`}>
+                      {getStatusIcon(order.status)}
+                      <span className="ml-1 capitalize">{order.status}</span>
+                    </Badge>
                   </div>
                 </CardHeader>
                 
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-3 p-3 pt-0">
                   {/* Customer Info */}
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
-                      <User className="h-5 w-5 text-blue-600" />
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <User className="h-3 w-3 text-blue-600" />
                     </div>
-                    <div>
-                      <p className="font-medium text-gray-900">{order.customer}</p>
-                      <p className="text-sm text-gray-600">{order.customerEmail}</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-gray-900 text-xs truncate">{order.customer}</p>
+                      <p className="text-xs text-gray-600 truncate">{order.customerEmail}</p>
                     </div>
                   </div>
                   
                   {/* Order Details */}
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-gray-500" />
-                      <span className="text-gray-600">{order.date}</span>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-3 w-3 text-gray-500" />
+                      <span className="text-gray-600 truncate">{order.date}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Package className="h-4 w-4 text-gray-500" />
+                    <div className="flex items-center gap-1">
+                      <Package className="h-3 w-3 text-gray-500" />
                       <span className="text-gray-600">{order.items} items</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <DollarSign className="h-4 w-4 text-gray-500" />
+                    <div className="flex items-center gap-1">
+                      <DollarSign className="h-3 w-3 text-gray-500" />
                       <span className="font-semibold text-gray-900">{order.total}</span>
                     </div>
-                    <div>
-                      <Badge className={getPaymentStatusColor(order.paymentStatus)}>
+                    <div className="flex justify-end">
+                      <Badge className={`${getPaymentStatusColor(order.paymentStatus)} text-xs px-1 py-0.5`}>
                         {order.paymentStatus}
                       </Badge>
                     </div>
@@ -267,23 +264,23 @@ const Orders = () => {
                   {/* Products Preview */}
                   <div>
                     <p className="text-xs text-gray-500 mb-1">Products:</p>
-                    <p className="text-sm text-gray-700 line-clamp-2">
+                    <p className="text-xs text-gray-700 line-clamp-1 truncate">
                       {order.products.join(", ")}
                     </p>
                   </div>
                   
                   {/* Actions */}
-                  <div className="flex gap-2 pt-2">
+                  <div className="flex gap-1 pt-1">
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="flex-1"
+                          className="flex-1 h-7 text-xs"
                           onClick={() => setSelectedOrder(order)}
                         >
-                          <Eye className="h-4 w-4 mr-2" />
-                          View Details
+                          <Eye className="h-3 w-3 mr-1" />
+                          View
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="max-w-2xl">
@@ -390,8 +387,8 @@ const Orders = () => {
                       </DialogContent>
                     </Dialog>
                     
-                    <Button variant="ghost" size="sm">
-                      <Edit className="h-4 w-4" />
+                    <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                      <Edit className="h-3 w-3" />
                     </Button>
                   </div>
                 </CardContent>
@@ -402,35 +399,35 @@ const Orders = () => {
       </div>
 
       {/* Summary Stats */}
-      <div className="grid gap-4 md:grid-cols-4">
-        <Card className="shadow-lg border-0 bg-gradient-to-br from-blue-50 to-blue-100">
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-blue-600">{filteredOrders.length}</p>
-            <p className="text-sm text-blue-800">Total Orders</p>
+      <div className="grid gap-3 grid-cols-2 md:grid-cols-4">
+        <Card className="shadow-sm border bg-gradient-to-br from-blue-50 to-blue-100">
+          <CardContent className="p-3 text-center">
+            <p className="text-xl font-bold text-blue-600">{filteredOrders.length}</p>
+            <p className="text-xs text-blue-800">Total Orders</p>
           </CardContent>
         </Card>
-        <Card className="shadow-lg border-0 bg-gradient-to-br from-green-50 to-green-100">
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-green-600">
+        <Card className="shadow-sm border bg-gradient-to-br from-green-50 to-green-100">
+          <CardContent className="p-3 text-center">
+            <p className="text-xl font-bold text-green-600">
               {filteredOrders.filter(o => o.status === "delivered").length}
             </p>
-            <p className="text-sm text-green-800">Delivered</p>
+            <p className="text-xs text-green-800">Delivered</p>
           </CardContent>
         </Card>
-        <Card className="shadow-lg border-0 bg-gradient-to-br from-purple-50 to-purple-100">
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-purple-600">
+        <Card className="shadow-sm border bg-gradient-to-br from-purple-50 to-purple-100">
+          <CardContent className="p-3 text-center">
+            <p className="text-xl font-bold text-purple-600">
               {filteredOrders.filter(o => o.status === "shipped").length}
             </p>
-            <p className="text-sm text-purple-800">Shipped</p>
+            <p className="text-xs text-purple-800">Shipped</p>
           </CardContent>
         </Card>
-        <Card className="shadow-lg border-0 bg-gradient-to-br from-amber-50 to-amber-100">
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-amber-600">
+        <Card className="shadow-sm border bg-gradient-to-br from-amber-50 to-amber-100">
+          <CardContent className="p-3 text-center">
+            <p className="text-xl font-bold text-amber-600">
               {filteredOrders.filter(o => o.status === "processing").length}
             </p>
-            <p className="text-sm text-amber-800">Processing</p>
+            <p className="text-xs text-amber-800">Processing</p>
           </CardContent>
         </Card>
       </div>
