@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/layout/Navbar';
@@ -34,12 +33,12 @@ const Checkout = () => {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // Paystack configuration
+  // Paystack configuration with your public key
   const paystackConfig = {
     reference: `order_${new Date().getTime()}_${Math.random().toString(36).substr(2, 9)}`,
     email: formState.email,
     amount: Math.round((total + 5.99 + (total * 0.07)) * 100), // Convert to kobo (smallest currency unit)
-    publicKey: 'pk_test_4ac9f2c43514cdc6c3b878b0d6a997e70b8b0bb2', // Demo public key - replace with your own
+    publicKey: 'pk_test_8808c1f796840bcc9fbc7d52d737dc3edf015501', // Your Paystack public key
     text: 'Pay Now',
     currency: 'NGN',
     channels: ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer'],
@@ -142,16 +141,16 @@ const Checkout = () => {
         <div className="container mx-auto px-4">
           <h1 className="text-2xl md:text-3xl font-bold mb-8 text-secondary">Checkout</h1>
           
-          {/* Demo Notice */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          {/* Live Integration Notice */}
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <Check className="h-5 w-5 text-blue-600" />
+                <Check className="h-5 w-5 text-green-600" />
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-blue-800">Demo Mode</h3>
-                <p className="text-sm text-blue-700">
-                  This is a live Paystack integration demo. Use test card: 4084 0840 8408 4081, CVV: 408, Expiry: 12/25
+                <h3 className="text-sm font-medium text-green-800">Live Paystack Integration</h3>
+                <p className="text-sm text-green-700">
+                  This is a live Paystack integration. Use test card: 4084 0840 8408 4081, CVV: 408, Expiry: 12/25
                 </p>
               </div>
             </div>
@@ -297,7 +296,7 @@ const Checkout = () => {
                         <div className="flex items-center">
                           <CreditCard className="h-5 w-5 mr-2 text-green-600" />
                           <span className="font-medium">Paystack (Recommended)</span>
-                          <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">LIVE DEMO</span>
+                          <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">LIVE</span>
                         </div>
                         <p className="text-xs text-gray-600 mt-1">Pay with cards, bank transfer, USSD, or mobile money</p>
                       </Label>
