@@ -11,6 +11,7 @@ import { useCart } from '@/hooks/useCart';
 import { useToast } from '@/hooks/use-toast';
 import { CreditCard, Landmark, Wallet, Check } from 'lucide-react';
 import { PaystackButton } from 'react-paystack';
+import { Receipt } from '@/components/checkout/Receipt';
 
 const Checkout = () => {
   const { items, total, clearCart } = useCart();
@@ -32,6 +33,9 @@ const Checkout = () => {
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const [showReceipt, setShowReceipt] = useState(false);
+  const [orderData, setOrderData] = useState<any>(null);
   
   // Paystack configuration with your public key
   const paystackConfig = {
@@ -68,13 +72,9 @@ const Checkout = () => {
   
   const handlePaystackSuccess = (reference: any) => {
     console.log('Payment successful:', reference);
-    toast({
-      title: "Payment Successful!",
-      description: `Payment completed with reference: ${reference.reference}`,
-    });
     
     // Create order record
-    const orderData = {
+    const newOrderData = {
       reference: reference.reference,
       email: formState.email,
       amount: reference.amount / 100,
@@ -89,9 +89,14 @@ const Checkout = () => {
       }
     };
     
-    console.log('Order created:', orderData);
-    clearCart();
-    navigate('/order-confirmation');
+    console.log('Order created:', newOrderData);
+    setOrderData(newOrderData);
+    setShowReceipt(true);
+    
+    toast({
+      title: "Payment Successful!",
+      description: `Payment completed with reference: ${reference.reference}`,
+    });
   };
   
   const handlePaystackClose = () => {
@@ -100,6 +105,12 @@ const Checkout = () => {
       description: "Your payment was cancelled. You can try again.",
       variant: "destructive"
     });
+  };
+  
+  const handleCloseReceipt = () => {
+    setShowReceipt(false);
+    clearCart();
+    navigate('/');
   };
   
   const handleSubmit = (e: React.FormEvent) => {
@@ -426,6 +437,11 @@ const Checkout = () => {
         </div>
       </main>
       <Footer />
+      
+      {/* Receipt Modal */}
+      {showReceipt && orderData && (
+        <Receipt orderData={orderData} onClose={handleCloseReceipt} />
+      )}
     </div>
   );
 };
