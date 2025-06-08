@@ -153,30 +153,28 @@ const Products = () => {
   const productToDelete = products.find(p => p.id === deleteProductId);
 
   return (
-    <div className="min-h-screen w-full">
-      <div className="w-full space-y-6">
-        <ProductsHeader />
-        
-        <ProductsFilters
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          categoryFilter={categoryFilter}
-          setCategoryFilter={setCategoryFilter}
-          statusFilter={statusFilter}
-          setStatusFilter={setStatusFilter}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-          categories={categories}
-        />
+    <div className="space-y-6">
+      <ProductsHeader />
+      
+      <ProductsFilters
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        categoryFilter={categoryFilter}
+        setCategoryFilter={setCategoryFilter}
+        statusFilter={statusFilter}
+        setStatusFilter={setStatusFilter}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        categories={categories}
+      />
 
-        <ProductsGrid
-          products={filteredProducts}
-          onViewDetails={handleViewDetails}
-          onDelete={setDeleteProductId}
-        />
+      <ProductsGrid
+        products={filteredProducts}
+        onViewDetails={handleViewDetails}
+        onDelete={setDeleteProductId}
+      />
 
-        <ProductsStats products={filteredProducts} />
-      </div>
+      <ProductsStats products={filteredProducts} />
 
       <ProductDetailsModal
         product={selectedProduct}

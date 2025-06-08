@@ -33,10 +33,10 @@ const Settings = () => {
   };
   
   return (
-    <div className="w-full space-y-6">
+    <div className="space-y-6">
       <SettingsHeader />
       
-      <Tabs defaultValue="general" className="w-full">
+      <Tabs defaultValue="general">
         <TabsList className="mb-6">
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
