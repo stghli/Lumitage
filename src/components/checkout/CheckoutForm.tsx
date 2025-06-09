@@ -1,20 +1,7 @@
-
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-
-type FormState = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-  saveInfo: boolean;
-};
+import { FormState } from '@/hooks/useCheckout';
 
 type CheckoutFormProps = {
   formState: FormState;
