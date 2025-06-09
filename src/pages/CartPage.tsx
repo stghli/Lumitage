@@ -89,7 +89,7 @@ const CartPage = () => {
                         {/* Mobile Only: Price & Quantity Controls */}
                         <div className="md:hidden mt-3 flex justify-between items-center">
                           <div className="text-sm">
-                            <span className="font-medium">${item.price.toFixed(2)}</span>
+                            <span className="font-medium">GH₵{item.price.toFixed(2)}</span>
                           </div>
                           
                           <div className="flex items-center border rounded">
@@ -116,7 +116,7 @@ const CartPage = () => {
                         {/* Mobile Only: Subtotal & Remove */}
                         <div className="md:hidden mt-3 flex justify-between items-center">
                           <div className="font-medium">
-                            ${(item.price * item.quantity).toFixed(2)}
+                            GH₵{(item.price * item.quantity).toFixed(2)}
                           </div>
                           <button
                             onClick={() => removeItem(item.id, item.size)}
@@ -130,7 +130,7 @@ const CartPage = () => {
                     
                     {/* Desktop Only: Price, Quantity, Subtotal */}
                     <div className="hidden md:block md:col-span-2 text-center">
-                      ${item.price.toFixed(2)}
+                      GH₵{item.price.toFixed(2)}
                     </div>
                     
                     <div className="hidden md:flex md:col-span-2 justify-center items-center">
@@ -157,7 +157,7 @@ const CartPage = () => {
                     
                     <div className="hidden md:flex md:col-span-2 justify-end items-center">
                       <span className="font-medium">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        GH₵{(item.price * item.quantity).toFixed(2)}
                       </span>
                       <button
                         onClick={() => removeItem(item.id, item.size)}
@@ -197,7 +197,7 @@ const CartPage = () => {
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Subtotal</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span>GH₵{total.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Shipping</span>
@@ -209,7 +209,7 @@ const CartPage = () => {
                   </div>
                   <div className="border-t pt-3 flex justify-between font-bold">
                     <span>Total</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span>GH₵{total.toFixed(2)}</span>
                   </div>
                 </div>
                 
@@ -225,7 +225,7 @@ const CartPage = () => {
                   <div className="flex justify-center space-x-2 mt-2">
                     <span className="px-2 py-1 bg-gray-100 rounded">Visa</span>
                     <span className="px-2 py-1 bg-gray-100 rounded">Mastercard</span>
-                    <span className="px-2 py-1 bg-gray-100 rounded">PayPal</span>
+                    <span className="px-2 py-1 bg-gray-100 rounded">Mobile Money</span>
                   </div>
                 </div>
               </div>

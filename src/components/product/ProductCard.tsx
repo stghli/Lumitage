@@ -80,7 +80,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
               {product.name}
             </h3>
           </Link>
-          <span className="font-semibold">${product.price.toFixed(2)}</span>
+          <span className="font-semibold">GH₵{product.price.toFixed(2)}</span>
         </div>
         
         <div className="flex items-center justify-between mt-4">

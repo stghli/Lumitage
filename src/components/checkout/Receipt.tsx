@@ -44,13 +44,13 @@ Customer: ${orderData.customerInfo.firstName} ${orderData.customerInfo.lastName}
 Email: ${orderData.customerInfo.email}
 
 ITEMS:
-${orderData.items.map(item => `- ${item.name} (Qty: ${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}`).join('\n')}
+${orderData.items.map(item => `- ${item.name} (Qty: ${item.quantity}) - GH₵${(item.price * item.quantity).toFixed(2)}`).join('\n')}
 
 SUMMARY:
-Subtotal: $${subtotal.toFixed(2)}
-Shipping: $${shipping.toFixed(2)}
-Tax: $${tax.toFixed(2)}
-Total: $${total.toFixed(2)}
+Subtotal: GH₵${subtotal.toFixed(2)}
+Shipping: GH₵${shipping.toFixed(2)}
+Tax: GH₵${tax.toFixed(2)}
+Total: GH₵${total.toFixed(2)}
 
 Payment Status: ${orderData.status}
 Shipping Address: ${orderData.shippingAddress}
@@ -126,7 +126,7 @@ Shipping Address: ${orderData.shippingAddress}
                     {item.size && <p className="text-sm text-gray-600">Size: {item.size}</p>}
                     <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
                   </div>
-                  <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="font-medium">GH₵{(item.price * item.quantity).toFixed(2)}</p>
                 </div>
               ))}
             </div>
@@ -138,20 +138,20 @@ Shipping Address: ${orderData.shippingAddress}
           <div className="space-y-2 mb-6">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>GH₵{subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Shipping</span>
-              <span>${shipping.toFixed(2)}</span>
+              <span>GH₵{shipping.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Tax</span>
-              <span>${tax.toFixed(2)}</span>
+              <span>GH₵{tax.toFixed(2)}</span>
             </div>
             <Separator />
             <div className="flex justify-between font-bold text-lg">
               <span>Total Paid</span>
-              <span className="text-green-600">${total.toFixed(2)}</span>
+              <span className="text-green-600">GH₵{total.toFixed(2)}</span>
             </div>
           </div>
 

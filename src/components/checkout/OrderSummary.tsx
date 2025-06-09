@@ -31,7 +31,7 @@ export const OrderSummary = ({ items, total }: OrderSummaryProps) => {
               )}
               <div className="flex justify-between mt-1">
                 <span className="text-xs text-gray-600">Qty: {item.quantity}</span>
-                <span className="text-sm font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                <span className="text-sm font-medium">GH₵{(item.price * item.quantity).toFixed(2)}</span>
               </div>
             </div>
           </div>
@@ -41,19 +41,19 @@ export const OrderSummary = ({ items, total }: OrderSummaryProps) => {
       <div className="space-y-3 mb-6">
         <div className="flex justify-between text-sm">
           <span className="text-gray-600">Subtotal</span>
-          <span>${total.toFixed(2)}</span>
+          <span>GH₵{total.toFixed(2)}</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-600">Shipping</span>
-          <span>$5.99</span>
+          <span>GH₵5.99</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-600">Tax</span>
-          <span>${(total * 0.07).toFixed(2)}</span>
+          <span>GH₵{(total * 0.07).toFixed(2)}</span>
         </div>
         <div className="border-t pt-3 flex justify-between font-bold">
           <span>Total</span>
-          <span>${(total + 5.99 + (total * 0.07)).toFixed(2)}</span>
+          <span>GH₵{(total + 5.99 + (total * 0.07)).toFixed(2)}</span>
         </div>
       </div>
     </div>

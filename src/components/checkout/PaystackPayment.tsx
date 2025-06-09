@@ -12,10 +12,10 @@ export const PaystackPayment = ({ email, total, onSuccess, onClose }: PaystackPa
   const paystackConfig = {
     reference: `order_${new Date().getTime()}_${Math.random().toString(36).substr(2, 9)}`,
     email: email,
-    amount: Math.round((total + 5.99 + (total * 0.07)) * 100), // Convert to kobo
+    amount: Math.round((total + 5.99 + (total * 0.07)) * 100), // Convert to pesewas (Ghana Cedis cents)
     publicKey: 'pk_test_8808c1f796840bcc9fbc7d52d737dc3edf015501',
     text: 'Pay Now',
-    currency: 'NGN',
+    currency: 'GHS',
     channels: ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer'],
     metadata: {
       custom_fields: [
