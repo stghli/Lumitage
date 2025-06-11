@@ -33,10 +33,10 @@ const Settings = () => {
   };
   
   return (
-    <div className="space-y-6">
+    <div className="w-full max-w-none space-y-6">
       <SettingsHeader />
       
-      <Tabs defaultValue="general">
+      <Tabs defaultValue="general" className="w-full">
         <TabsList className="mb-6">
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
@@ -44,25 +44,25 @@ const Settings = () => {
           <TabsTrigger value="integrations">Integrations</TabsTrigger>
         </TabsList>
         
-        <TabsContent value="general">
+        <TabsContent value="general" className="w-full">
           <GeneralSettings 
             initialSettings={generalSettings}
             onSettingsChange={setGeneralSettings}
           />
         </TabsContent>
         
-        <TabsContent value="notifications">
+        <TabsContent value="notifications" className="w-full">
           <NotificationSettings 
             initialSettings={notificationSettings}
             onSettingsChange={setNotificationSettings}
           />
         </TabsContent>
         
-        <TabsContent value="appearance">
+        <TabsContent value="appearance" className="w-full">
           <AppearanceSettings />
         </TabsContent>
         
-        <TabsContent value="integrations">
+        <TabsContent value="integrations" className="w-full">
           <IntegrationsSettings />
         </TabsContent>
       </Tabs>

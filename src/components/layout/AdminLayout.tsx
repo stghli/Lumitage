@@ -51,6 +51,9 @@ export const AdminLayout = () => {
     { path: '/admin/settings', label: 'Settings', icon: Settings },
   ];
 
+  // Check if current route needs full width
+  const isFullWidthRoute = ['/admin/products', '/admin/customers', '/admin/settings'].includes(location.pathname);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Navigation */}
@@ -140,7 +143,7 @@ export const AdminLayout = () => {
       </header>
 
       {/* Main Content */}
-      <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
+      <main className={`w-full py-8 ${isFullWidthRoute ? 'px-4 sm:px-6 lg:px-8' : 'px-4 sm:px-6 lg:px-8'}`}>
         <Outlet />
       </main>
 
