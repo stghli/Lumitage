@@ -29,7 +29,7 @@ export const ProductsGrid = ({ products, onViewDetails, onDelete }: ProductsGrid
   if (products.length === 0) {
     return (
       <div className="w-full">
-        <div className="col-span-full text-center py-12">
+        <div className="text-center py-12">
           <Package className="h-16 w-16 text-gray-300 mx-auto mb-4" />
           <p className="text-gray-500 text-lg">No products found matching your criteria.</p>
         </div>
@@ -39,7 +39,7 @@ export const ProductsGrid = ({ products, onViewDetails, onDelete }: ProductsGrid
 
   return (
     <div className="w-full">
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {products.map((product, index) => (
           <ProductCard
             key={product.id}
