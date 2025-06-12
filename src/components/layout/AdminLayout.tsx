@@ -51,7 +51,7 @@ export const AdminLayout = () => {
     { path: '/admin/settings', label: 'Settings', icon: Settings },
   ];
 
-  // Check if current route needs full width
+  // Check if current route needs full width (no padding)
   const isFullWidthRoute = ['/admin/products', '/admin/customers', '/admin/settings'].includes(location.pathname);
 
   return (

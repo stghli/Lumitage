@@ -33,11 +33,11 @@ const Settings = () => {
   };
   
   return (
-    <div className="min-h-screen w-full px-4 sm:px-6 lg:px-8 space-y-6">
+    <div className="w-screen px-4 sm:px-6 lg:px-8 space-y-6">
       <SettingsHeader />
       
-      <Tabs defaultValue="general" className="w-full max-w-none">
-        <TabsList className="mb-6">
+      <Tabs defaultValue="general" className="w-full">
+        <TabsList className="mb-6 w-full sm:w-auto">
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
           <TabsTrigger value="appearance">Appearance</TabsTrigger>
