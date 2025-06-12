@@ -33,7 +33,7 @@ const Settings = () => {
   };
   
   return (
-    <div className="w-full max-w-none space-y-6">
+    <div className="w-full px-4 sm:px-6 lg:px-8 space-y-6">
       <SettingsHeader />
       
       <Tabs defaultValue="general" className="w-full">
