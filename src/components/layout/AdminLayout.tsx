@@ -143,7 +143,7 @@ export const AdminLayout = () => {
       </header>
 
       {/* Main Content */}
-      <main className={`w-full py-8 ${isFullWidthRoute ? 'px-4 sm:px-6 lg:px-8' : 'px-4 sm:px-6 lg:px-8'}`}>
+      <main className={`w-full py-8 ${isFullWidthRoute ? '' : 'px-4 sm:px-6 lg:px-8'}`}>
         <Outlet />
       </main>
 
