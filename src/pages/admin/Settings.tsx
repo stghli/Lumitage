@@ -33,10 +33,10 @@ const Settings = () => {
   };
   
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8 space-y-6">
+    <div className="min-h-screen w-full px-4 sm:px-6 lg:px-8 space-y-6">
       <SettingsHeader />
       
-      <Tabs defaultValue="general" className="w-full">
+      <Tabs defaultValue="general" className="w-full max-w-none">
         <TabsList className="mb-6">
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
@@ -67,7 +67,7 @@ const Settings = () => {
         </TabsContent>
       </Tabs>
       
-      <div className="flex justify-end">
+      <div className="flex justify-end pb-8">
         <Button onClick={saveSettings}>Save Settings</Button>
       </div>
     </div>
