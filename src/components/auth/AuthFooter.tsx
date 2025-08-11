@@ -32,14 +32,7 @@ export const AuthFooter = ({
   return <>
       <motion.div variants={itemVariants} className="text-center mt-6">
         <p className="text-sm text-gray-200">
-          {activeTab === 'login' ? "Don't have an account? " : "Already have an account? "}
-          <motion.button onClick={() => onTabChange(activeTab === 'login' ? 'register' : 'login')} className="text-primary hover:underline font-medium" whileHover={{
-          scale: 1.05
-        }} whileTap={{
-          scale: 0.95
-        }}>
-            {activeTab === 'login' ? 'Register' : 'Login'}
-          </motion.button>
+          Accounts are created automatically after purchase. Use the credentials on your receipt to sign in.
         </p>
       </motion.div>
 

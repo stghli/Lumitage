@@ -6,12 +6,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card } from '@/components/ui/card';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
-import { KeyRound, UserPlus } from 'lucide-react';
+import { KeyRound } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 // Import refactored components
 import { LoginForm } from '@/components/auth/LoginForm';
-import { RegisterForm } from '@/components/auth/RegisterForm';
+// import { RegisterForm } from '@/components/auth/RegisterForm';
 import { AuthHeader } from '@/components/auth/AuthHeader';
 import { AuthFooter } from '@/components/auth/AuthFooter';
 import { 
@@ -50,7 +50,7 @@ const Auth = () => {
             <AuthHeader activeTab={activeTab} />
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-8 bg-black/20 backdrop-blur-md">
+              <TabsList className="grid w-full grid-cols-1 mb-8 bg-black/20 backdrop-blur-md">
                 <TabsTrigger
                   value="login"
                   className="data-[state=active]:bg-primary data-[state=active]:text-white transition-all duration-300"
@@ -58,21 +58,10 @@ const Auth = () => {
                   <KeyRound className="h-4 w-4 mr-2" />
                   Login
                 </TabsTrigger>
-                <TabsTrigger
-                  value="register"
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white transition-all duration-300"
-                >
-                  <UserPlus className="h-4 w-4 mr-2" />
-                  Register
-                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="login" className="space-y-4 mt-4">
                 <LoginForm />
-              </TabsContent>
-
-              <TabsContent value="register" className="space-y-4 mt-4">
-                <RegisterForm />
               </TabsContent>
             </Tabs>
 
