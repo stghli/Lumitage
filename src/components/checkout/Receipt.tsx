@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { CheckCircle2, Download, Receipt as ReceiptIcon, Mail, Calendar, User, MapPin, Phone, Copy } from 'lucide-react';
+import { CheckCircle2, Download, Receipt as ReceiptIcon, Mail, Calendar, User, MapPin, Phone, Copy, KeyRound } from 'lucide-react';
 import { CartItem } from '@/hooks/useCart';
 
 type ReceiptProps = {
