@@ -4,6 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { CheckCircle2, Download, Receipt as ReceiptIcon, Mail, Calendar, User, MapPin, Phone, Copy, KeyRound } from 'lucide-react';
 import { CartItem } from '@/hooks/useCart';
+import { useRef } from 'react';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 type ReceiptProps = {
   orderData: {
@@ -30,49 +33,37 @@ export const Receipt = ({ orderData, onClose, temporaryCredentials }: ReceiptPro
   const tax = subtotal * 0.07;
   const total = subtotal + shipping + tax;
 
+  const receiptRef = useRef<HTMLDivElement>(null);
+
   const handlePrint = () => {
     window.print();
   };
 
-  const handleDownload = () => {
-    const credentialsText = temporaryCredentials ? `\nTEMPORARY ACCOUNT:\nEmail: ${temporaryCredentials.email}\nPassword: ${temporaryCredentials.password}\nPlease change your password after logging in.\n` : '';
+  const handleDownload = async () => {
+    const element = receiptRef.current;
+    if (!element) return;
 
-    // Create a simple text receipt
-    const receiptText = `
-RECEIPT
-=======
-Order Reference: ${orderData.reference}
-Date: ${new Date().toLocaleDateString()}
-Customer: ${orderData.customerInfo.firstName} ${orderData.customerInfo.lastName}
-Email: ${orderData.customerInfo.email}
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight,
+    });
 
-ITEMS:
-${orderData.items.map(item => `- ${item.name} (Qty: ${item.quantity}) - GH₵${(item.price * item.quantity).toFixed(2)}`).join('\n')}
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const imgWidth = pdfWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-SUMMARY:
-Subtotal: GH₵${subtotal.toFixed(2)}
-Shipping: GH₵${shipping.toFixed(2)}
-Tax: GH₵${tax.toFixed(2)}
-Total: GH₵${total.toFixed(2)}
-${credentialsText}
-Payment Status: ${orderData.status}
-Shipping Address: ${orderData.shippingAddress}
-    `;
-
-    const blob = new Blob([receiptText], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `receipt-${orderData.reference}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+    pdf.save(`receipt-${orderData.reference}.pdf`);
   };
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <Card className="max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border-0">
+      <Card ref={receiptRef} className="max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border-0">
         <CardHeader className="text-center border-b border-gray-100 bg-gradient-to-br from-green-50 to-emerald-50 pb-8">
           <div className="flex justify-center mb-6">
             <div className="bg-gradient-to-br from-green-500 to-emerald-600 p-4 rounded-full shadow-lg">
@@ -150,7 +141,7 @@ Shipping Address: ${orderData.shippingAddress}
                   <div className="relative">
                     <img 
                       src={item.image} 
-                      alt={item.name}
+                      alt={`${item.name} product image`}
                       className="w-16 h-16 rounded-lg object-cover border-2 border-gray-100"
                     />
                   </div>
@@ -237,7 +228,7 @@ Shipping Address: ${orderData.shippingAddress}
             </Button>
             <Button onClick={handleDownload} variant="outline" className="flex-1 h-12 border-2 hover:bg-gray-50">
               <Download className="h-4 w-4 mr-2" />
-              Download
+              Download PDF
             </Button>
             <Button onClick={onClose} className="flex-1 h-12 bg-gradient-to-r from-primary to-red-600 hover:from-red-600 hover:to-primary shadow-lg hover:shadow-xl transition-all">
               Continue Shopping
