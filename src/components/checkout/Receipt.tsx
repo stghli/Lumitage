@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { CheckCircle2, Download, Receipt as ReceiptIcon, Mail, Calendar, User, MapPin, Phone } from 'lucide-react';
+import { CheckCircle2, Download, Receipt as ReceiptIcon, Mail, Calendar, User, MapPin, Phone, Copy } from 'lucide-react';
 import { CartItem } from '@/hooks/useCart';
 
 type ReceiptProps = {
@@ -20,10 +20,11 @@ type ReceiptProps = {
       phone: string;
     };
   };
+  temporaryCredentials?: { email: string; password: string } | null;
   onClose: () => void;
 };
 
-export const Receipt = ({ orderData, onClose }: ReceiptProps) => {
+export const Receipt = ({ orderData, onClose, temporaryCredentials }: ReceiptProps) => {
   const subtotal = orderData.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const shipping = 5.99;
   const tax = subtotal * 0.07;
@@ -34,6 +35,8 @@ export const Receipt = ({ orderData, onClose }: ReceiptProps) => {
   };
 
   const handleDownload = () => {
+    const credentialsText = temporaryCredentials ? `\nTEMPORARY ACCOUNT:\nEmail: ${temporaryCredentials.email}\nPassword: ${temporaryCredentials.password}\nPlease change your password after logging in.\n` : '';
+
     // Create a simple text receipt
     const receiptText = `
 RECEIPT
@@ -51,7 +54,7 @@ Subtotal: GH₵${subtotal.toFixed(2)}
 Shipping: GH₵${shipping.toFixed(2)}
 Tax: GH₵${tax.toFixed(2)}
 Total: GH₵${total.toFixed(2)}
-
+${credentialsText}
 Payment Status: ${orderData.status}
 Shipping Address: ${orderData.shippingAddress}
     `;
@@ -200,6 +203,31 @@ Shipping Address: ${orderData.shippingAddress}
               <p className="text-gray-700 leading-relaxed">{orderData.shippingAddress}</p>
             </div>
           </div>
+
+          {temporaryCredentials && (
+            <div className="mb-8">
+              <div className="flex items-center gap-3 mb-3">
+                <KeyRound className="h-5 w-5 text-gray-500" />
+                <h4 className="font-bold text-lg text-gray-900">Your Temporary Account</h4>
+              </div>
+              <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-xl space-y-2">
+                <p className="text-sm text-yellow-800">Use these credentials to log in, then you will be asked to change your password.</p>
+                <div className="flex items-center justify-between bg-white rounded-lg p-3 border">
+                  <div>
+                    <p className="text-gray-700"><span className="font-medium">Email:</span> {temporaryCredentials.email}</p>
+                    <p className="text-gray-700"><span className="font-medium">Temp Password:</span> {temporaryCredentials.password}</p>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => navigator.clipboard.writeText(`${temporaryCredentials.email} | ${temporaryCredentials.password}`)}
+                  >
+                    <Copy className="h-4 w-4 mr-2" /> Copy
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-3 mb-6">

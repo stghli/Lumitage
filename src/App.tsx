@@ -17,6 +17,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import AdminAuth from "./pages/AdminAuth";
+import ChangePassword from "./pages/ChangePassword";
 
 // Admin components
 import { AdminProvider } from "./components/admin/AdminProvider";
@@ -55,6 +56,7 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/change-password" element={<ChangePassword />} />
               <Route path="/admin-auth" element={<AdminAuth />} />
               
               {/* Admin Routes */}

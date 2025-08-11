@@ -25,7 +25,7 @@ const createDemoUser = (email: string): User => ({
   aud: 'authenticated',
   role: 'authenticated',
   app_metadata: {},
-  user_metadata: { email },
+  user_metadata: { email, must_change_password: true },
   identities: [],
   factors: []
 });
@@ -81,15 +81,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
         
         console.log('Supabase auth success:', data);
+        const authedUser = data.user;
         toast.success('Successfully signed in!');
         
         // Only redirect if not skipping redirect (for admin login)
         if (!skipRedirect) {
-          // Check if user is admin or regular user
-          if (email.toLowerCase().includes('admin')) {
-            navigate('/admin/dashboard');
+          if (authedUser?.user_metadata?.must_change_password) {
+            navigate('/change-password');
           } else {
-            navigate('/user/dashboard');
+            // Check if user is admin or regular user
+            if (email.toLowerCase().includes('admin')) {
+              navigate('/admin/dashboard');
+            } else {
+              navigate('/user/dashboard');
+            }
           }
         }
         return;
@@ -109,11 +114,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           
           // Only redirect if not skipping redirect (for admin login)
           if (!skipRedirect) {
-            // Check if user is admin or regular user
-            if (email.toLowerCase().includes('admin')) {
-              navigate('/admin/dashboard');
+            if ((demoUser as any)?.user_metadata?.must_change_password) {
+              navigate('/change-password');
             } else {
-              navigate('/user/dashboard');
+              // Check if user is admin or regular user
+              if (email.toLowerCase().includes('admin')) {
+                navigate('/admin/dashboard');
+              } else {
+                navigate('/user/dashboard');
+              }
             }
           }
           return;
@@ -144,6 +153,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             data: {
               first_name: firstName,
               last_name: lastName,
+              must_change_password: true,
             },
           },
         });
@@ -166,17 +176,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           
           // Fallback to demo registration for network issues
           if (password.length >= 6 && email && firstName && lastName) {
-            const demoUser = createDemoUser(email);
-            const demoSession = createDemoSession(demoUser);
-            
-            setUser(demoUser);
-            setSession(demoSession);
-            
             console.log('Demo registration success for:', email);
-            toast.success('Account created successfully (Demo Mode)! You are now logged in.');
-            
-            // Redirect to user dashboard after successful demo registration
-            navigate('/user/dashboard');
+            toast.success('Account created successfully (Demo Mode)! Use the credentials shown on your receipt to sign in.');
             return;
           }
         }

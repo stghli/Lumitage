@@ -42,6 +42,7 @@ export const useCheckout = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showReceipt, setShowReceipt] = useState(false);
   const [orderData, setOrderData] = useState<any>(null);
+  const [temporaryCredentials, setTemporaryCredentials] = useState<{ email: string; password: string } | null>(null);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -62,21 +63,25 @@ export const useCheckout = () => {
       
       console.log('Creating account for user:', email);
       await signUp(email, randomPassword, firstName, lastName);
+      setTemporaryCredentials({ email, password: randomPassword });
       
       toast({
         title: "Account Created!",
-        description: `An account has been created for ${email}. Check your email for login details.`,
+        description: `Temporary credentials generated for ${email}.`,
       });
+      return randomPassword;
     } catch (error) {
       console.log('Account creation failed (user might already exist):', error);
+      return null;
     }
   };
   
   const handlePaystackSuccess = async (reference: any) => {
     console.log('Payment successful:', reference);
     
+    let generatedPassword: string | null = null;
     if (!user && formState.email && formState.firstName && formState.lastName) {
-      await createAccountForUser(formState.email, formState.firstName, formState.lastName);
+      generatedPassword = await createAccountForUser(formState.email, formState.firstName, formState.lastName);
     }
     
     const newOrderData = {
@@ -154,6 +159,7 @@ export const useCheckout = () => {
     isSubmitting,
     showReceipt,
     orderData,
+    temporaryCredentials,
     items,
     total,
     handleChange,

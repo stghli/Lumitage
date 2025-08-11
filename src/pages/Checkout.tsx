@@ -16,6 +16,7 @@ const Checkout = () => {
     isSubmitting,
     showReceipt,
     orderData,
+    temporaryCredentials,
     items,
     total,
     handleChange,
@@ -70,7 +71,7 @@ const Checkout = () => {
       <Footer />
       
       {showReceipt && orderData && (
-        <Receipt orderData={orderData} onClose={handleCloseReceipt} />
+        <Receipt orderData={orderData} temporaryCredentials={temporaryCredentials} onClose={handleCloseReceipt} />
       )}
     </div>
   );
