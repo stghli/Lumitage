@@ -1,6 +1,7 @@
-
 import { Package } from "lucide-react";
 import { ProductCard } from "./ProductCard";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Card } from "@/components/ui/card";
 
 type Product = {
   id: string;
@@ -28,24 +29,40 @@ type ProductsGridProps = {
 export const ProductsGrid = ({ products, onViewDetails, onDelete }: ProductsGridProps) => {
   if (products.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
+      <Card className="flex flex-col items-center justify-center py-12 text-center">
         <Package className="h-12 w-12 text-muted-foreground mb-3" />
         <p className="text-muted-foreground">No products found</p>
-      </div>
+      </Card>
     );
   }
 
   return (
-    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {products.map((product, index) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          index={index}
-          onViewDetails={onViewDetails}
-          onDelete={onDelete}
-        />
-      ))}
-    </div>
+    <Card>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Product</TableHead>
+            <TableHead>Category</TableHead>
+            <TableHead>Rating</TableHead>
+            <TableHead>Price</TableHead>
+            <TableHead className="text-center">Stock</TableHead>
+            <TableHead className="text-center">Sales</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {products.map((product, index) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              index={index}
+              onViewDetails={onViewDetails}
+              onDelete={onDelete}
+            />
+          ))}
+        </TableBody>
+      </Table>
+    </Card>
   );
 };

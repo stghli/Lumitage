@@ -1,10 +1,12 @@
-
 import { useState } from "react";
-import { User } from "lucide-react";
+import { User, Users } from "lucide-react";
 import { CustomerCard, Customer } from "@/components/admin/customers/CustomerCard";
 import { CustomerFilters } from "@/components/admin/customers/CustomerFilters";
 import { CustomerStats } from "@/components/admin/customers/CustomerStats";
 import { CustomerProfileModal } from "@/components/admin/customers/CustomerProfileModal";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 // Enhanced mock data for customers
 const mockCustomers: Customer[] = [
@@ -167,10 +169,19 @@ const Customers = () => {
   return (
     <div className="w-full space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 to-teal-600 rounded-2xl p-6 text-white">
-        <h1 className="text-3xl font-bold mb-2">Customer Management</h1>
-        <p className="text-green-100">Build and maintain strong customer relationships</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Customers</h1>
+          <p className="text-sm text-muted-foreground mt-1">Manage customer relationships</p>
+        </div>
+        <Button>
+          <Users className="h-4 w-4 mr-2" />
+          Add Customer
+        </Button>
       </div>
+
+      {/* Summary Stats */}
+      <CustomerStats customers={filteredCustomers} />
       
       {/* Filters and Search */}
       <CustomerFilters
@@ -185,31 +196,43 @@ const Customers = () => {
         onToggleAllSelection={toggleAllSelection}
       />
 
-      {/* Customers Grid */}
-      <div className="w-full">
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-          {filteredCustomers.length === 0 ? (
-            <div className="col-span-full text-center py-12">
-              <User className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg">No customers found matching your criteria.</p>
-            </div>
-          ) : (
-            filteredCustomers.map((customer, index) => (
-              <CustomerCard
-                key={customer.id}
-                customer={customer}
-                index={index}
-                isSelected={selectedCustomers.includes(customer.id)}
-                onToggleSelection={toggleCustomerSelection}
-                onViewDetails={handleViewDetails}
-              />
-            ))
-          )}
-        </div>
-      </div>
-
-      {/* Summary Stats */}
-      <CustomerStats customers={filteredCustomers} />
+      {/* Customers Table */}
+      {filteredCustomers.length === 0 ? (
+        <Card className="flex flex-col items-center justify-center py-12 text-center">
+          <User className="h-12 w-12 text-muted-foreground mb-3" />
+          <p className="text-muted-foreground">No customers found</p>
+        </Card>
+      ) : (
+        <Card>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-12"></TableHead>
+                <TableHead>Customer</TableHead>
+                <TableHead>Company</TableHead>
+                <TableHead>Rating</TableHead>
+                <TableHead className="text-center">Orders</TableHead>
+                <TableHead>Total Spent</TableHead>
+                <TableHead>Location</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredCustomers.map((customer, index) => (
+                <CustomerCard
+                  key={customer.id}
+                  customer={customer}
+                  index={index}
+                  isSelected={selectedCustomers.includes(customer.id)}
+                  onToggleSelection={toggleCustomerSelection}
+                  onViewDetails={handleViewDetails}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
+      )}
 
       {/* Customer Profile Modal */}
       <CustomerProfileModal

@@ -1,8 +1,8 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Edit, Trash2, Eye, Package, TrendingUp, Star, AlertTriangle } from "lucide-react";
+import { Edit, Trash2, Eye, Star } from "lucide-react";
+import { TableCell, TableRow } from "@/components/ui/table";
 
 type Product = {
   id: string;
@@ -39,78 +39,64 @@ export const ProductCard = ({ product, index, onViewDetails, onDelete }: Product
   };
 
   return (
-    <Card className="hover:shadow-md transition-shadow">
-      <CardHeader className="p-0">
-        <div className="relative aspect-square">
+    <TableRow>
+      <TableCell>
+        <div className="flex items-center gap-3">
           <img 
             src={product.image} 
             alt={product.name}
-            className="w-full h-full object-cover rounded-t-lg"
+            className="w-12 h-12 object-cover rounded"
           />
-          <div className="absolute top-2 right-2">
-            <Badge variant={getStatusVariant(product.status)}>
-              {product.status.replace('-', ' ')}
-            </Badge>
+          <div>
+            <div className="font-medium">{product.name}</div>
+            <div className="text-sm text-muted-foreground">{product.id}</div>
           </div>
         </div>
-      </CardHeader>
-      
-      <CardContent className="p-4 space-y-3">
+      </TableCell>
+      <TableCell>{product.category}</TableCell>
+      <TableCell>
+        <div className="flex items-center gap-1">
+          <Star className="h-3 w-3 fill-primary text-primary" />
+          <span>{product.rating}</span>
+          <span className="text-muted-foreground text-xs">({product.reviews})</span>
+        </div>
+      </TableCell>
+      <TableCell>
         <div>
-          <CardTitle className="text-base font-semibold line-clamp-1">
-            {product.name}
-          </CardTitle>
-          <p className="text-sm text-muted-foreground">{product.category}</p>
-        </div>
-        
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1 text-sm">
-            <Star className="h-3.5 w-3.5 fill-primary text-primary" />
-            <span className="font-medium">{product.rating}</span>
-            <span className="text-muted-foreground">({product.reviews})</span>
-          </div>
-          <div className="text-sm text-muted-foreground">
-            <TrendingUp className="h-3.5 w-3.5 inline mr-1" />
-            {product.sales} sold
-          </div>
-        </div>
-        
-        <div className="flex items-baseline gap-2">
-          <span className="text-lg font-semibold">{product.price}</span>
+          <div className="font-medium">{product.price}</div>
           {product.originalPrice && (
-            <span className="text-sm text-muted-foreground line-through">{product.originalPrice}</span>
+            <div className="text-xs text-muted-foreground line-through">{product.originalPrice}</div>
           )}
         </div>
-        
-        <div className="text-sm text-muted-foreground">
-          <Package className="h-3.5 w-3.5 inline mr-1" />
-          Stock: {product.stock}
-        </div>
-        
-        <div className="flex gap-2 pt-2">
+      </TableCell>
+      <TableCell className="text-center">{product.stock}</TableCell>
+      <TableCell className="text-center">{product.sales}</TableCell>
+      <TableCell>
+        <Badge variant={getStatusVariant(product.status)}>
+          {product.status.replace('-', ' ')}
+        </Badge>
+      </TableCell>
+      <TableCell>
+        <div className="flex items-center gap-2">
           <Button 
-            variant="outline" 
-            size="sm" 
-            className="flex-1"
+            variant="ghost" 
+            size="sm"
             onClick={() => onViewDetails(product)}
           >
-            <Eye className="h-3.5 w-3.5 mr-1" />
-            View
+            <Eye className="h-4 w-4" />
           </Button>
-          
-          <Button variant="outline" size="sm">
-            <Edit className="h-3.5 w-3.5" />
+          <Button variant="ghost" size="sm">
+            <Edit className="h-4 w-4" />
           </Button>
-          
           <Button 
-            variant="outline" 
+            variant="ghost" 
             size="sm"
             onClick={() => onDelete(product.id)}
           >
-            <Trash2 className="h-3.5 w-3.5 text-destructive" />
+            <Trash2 className="h-4 w-4 text-destructive" />
           </Button>
         </div>
-      </CardContent>
-    </Card>
+      </TableCell>
+    </TableRow>
   );
 };
