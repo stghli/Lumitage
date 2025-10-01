@@ -28,28 +28,24 @@ type ProductsGridProps = {
 export const ProductsGrid = ({ products, onViewDetails, onDelete }: ProductsGridProps) => {
   if (products.length === 0) {
     return (
-      <div className="w-full">
-        <div className="text-center py-12">
-          <Package className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-          <p className="text-gray-500 text-lg">No products found matching your criteria.</p>
-        </div>
+      <div className="flex flex-col items-center justify-center py-12 text-center">
+        <Package className="h-12 w-12 text-muted-foreground mb-3" />
+        <p className="text-muted-foreground">No products found</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full">
-      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-        {products.map((product, index) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            index={index}
-            onViewDetails={onViewDetails}
-            onDelete={onDelete}
-          />
-        ))}
-      </div>
+    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {products.map((product, index) => (
+        <ProductCard
+          key={product.id}
+          product={product}
+          index={index}
+          onViewDetails={onViewDetails}
+          onDelete={onDelete}
+        />
+      ))}
     </div>
   );
 };

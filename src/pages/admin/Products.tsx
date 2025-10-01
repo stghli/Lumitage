@@ -156,6 +156,8 @@ const Products = () => {
     <div className="space-y-6">
       <ProductsHeader />
       
+      <ProductsStats products={filteredProducts} />
+      
       <ProductsFilters
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -173,8 +175,6 @@ const Products = () => {
         onViewDetails={handleViewDetails}
         onDelete={setDeleteProductId}
       />
-
-      <ProductsStats products={filteredProducts} />
 
       <ProductDetailsModal
         product={selectedProduct}

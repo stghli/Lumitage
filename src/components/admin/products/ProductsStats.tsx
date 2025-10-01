@@ -12,34 +12,42 @@ type ProductsStatsProps = {
 export const ProductsStats = ({ products }: ProductsStatsProps) => {
   return (
     <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
-      <Card className="shadow-lg border-0 bg-gradient-to-br from-blue-50 to-blue-100">
-        <CardContent className="p-4 text-center">
-          <p className="text-2xl font-bold text-blue-600">{products.length}</p>
-          <p className="text-sm text-blue-800">Total Products</p>
+      <Card>
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-muted-foreground">Total Products</p>
+          </div>
+          <p className="text-2xl font-semibold mt-2">{products.length}</p>
         </CardContent>
       </Card>
-      <Card className="shadow-lg border-0 bg-gradient-to-br from-green-50 to-green-100">
-        <CardContent className="p-4 text-center">
-          <p className="text-2xl font-bold text-green-600">
+      <Card>
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-muted-foreground">In Stock</p>
+          </div>
+          <p className="text-2xl font-semibold mt-2 text-green-600">
             {products.filter(p => p.status === "in-stock").length}
           </p>
-          <p className="text-sm text-green-800">In Stock</p>
         </CardContent>
       </Card>
-      <Card className="shadow-lg border-0 bg-gradient-to-br from-amber-50 to-amber-100">
-        <CardContent className="p-4 text-center">
-          <p className="text-2xl font-bold text-amber-600">
+      <Card>
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-muted-foreground">Low Stock</p>
+          </div>
+          <p className="text-2xl font-semibold mt-2 text-amber-600">
             {products.filter(p => p.status === "low-stock").length}
           </p>
-          <p className="text-sm text-amber-800">Low Stock</p>
         </CardContent>
       </Card>
-      <Card className="shadow-lg border-0 bg-gradient-to-br from-red-50 to-red-100">
-        <CardContent className="p-4 text-center">
-          <p className="text-2xl font-bold text-red-600">
+      <Card>
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-muted-foreground">Out of Stock</p>
+          </div>
+          <p className="text-2xl font-semibold mt-2 text-red-600">
             {products.filter(p => p.status === "out-of-stock").length}
           </p>
-          <p className="text-sm text-red-800">Out of Stock</p>
         </CardContent>
       </Card>
     </div>
